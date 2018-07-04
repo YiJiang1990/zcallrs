@@ -64,5 +64,7 @@ class Kernel extends HttpKernel
 
         // dingo serializer
         'serializer' => \Liyu\Dingo\SerializerSwitch::class,
+
+        'permission' => \App\Http\Middleware\Permission::class,
     ];
 }

@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Transformers\UserTransformer;
+use Spatie\Permission\Contracts\Permission;
 
 /**
  * Class UserController
