@@ -10,19 +10,35 @@ use App\Models\User;
 use App\Models\Roles;
 use App\Http\Transformers\RoleTransformer;
 
+/**
+ * Class RolesController
+ * @package App\Http\Controllers\Api
+ */
 class RolesController extends Controller
 {
+    /**
+     * @param RolesRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
     public function index(RolesRequest $request)
     {
         $role = Role::orderBy('id', 'desc')->paginate($request->get('limit'));
         return $this->response->paginator($role, new RoleTransformer());
     }
 
+    /**
+     * @return \Dingo\Api\Http\Response
+     */
     public function roleAll( )
     {
         $role = Role::orderBy('id', 'desc')->get();
         return $this->response->collection($role, new RoleTransformer());
     }
+
+    /**
+     * @param RolesRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
     public function create(RolesRequest $request)
     {
         if (Role::create(['name' => $request->get('name')])) {
@@ -31,6 +47,10 @@ class RolesController extends Controller
         abort(403, '新增失败');
     }
 
+    /**
+     * @param RolesRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
     public function update(RolesRequest $request)
     {
         $role = Role::findById($request->get('id'));
@@ -40,6 +60,10 @@ class RolesController extends Controller
         abort(403, '编辑失败');
     }
 
+    /**
+     * @param $id
+     * @return \Dingo\Api\Http\Response
+     */
     public function destroy($id)
     {
         if (Role::findById($id)->delete()) {
@@ -48,13 +72,23 @@ class RolesController extends Controller
         abort(403, '删除失败');
     }
 
-    public function addPermissionToRole($id,RolesRequest $request)
+    /**
+     * @param $id
+     * @param RolesRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function addPermissionToRole($id, RolesRequest $request)
     {
         if (Role::findById($id)->syncPermissions($request->get('role'))){
             return $this->response->noContent();
         }
         abort(403, '授权失败');
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function userRole($id){
           $user = User::findorfail($id);
           $role = $user->getRoleNames();
@@ -62,7 +96,12 @@ class RolesController extends Controller
           return $this->response->array($role);
     }
 
-    public function addRoleToUser($id,RolesRequest $request)
+    /**
+     * @param $id
+     * @param RolesRequest $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function addRoleToUser($id, RolesRequest $request)
     {
         $roles = $request->get('role');
         $role =  Role::whereIn('name',$roles)->get();
@@ -71,7 +110,11 @@ class RolesController extends Controller
         }
         abort(403, '授权失败');
     }
-    
+
+    /**
+     * @param $id
+     * @return \Dingo\Api\Http\Response
+     */
     public function show($id)
     {
         $permissions = Roles::find($id)->getAllPermissionsWith;

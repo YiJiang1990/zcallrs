@@ -7,8 +7,16 @@ use App\Models\Authorization;
 use App\Http\Transformers\AuthorizationTransformer;
 use App\Http\Requests\Api\Authorization\StoreRequest;
 
+/**
+ * Class AuthorizationController
+ * @package App\Http\Controllers\Api
+ */
 class AuthorizationController extends Controller
 {
+    /**
+     * @param StoreRequest $request
+     * @return $this
+     */
     public function store(StoreRequest $request)
     {
         $credentials = $request->only('email', 'password');
@@ -23,6 +31,9 @@ class AuthorizationController extends Controller
              ->setStatusCode(201);
     }
 
+    /**
+     * @return \Dingo\Api\Http\Response
+     */
     public function update()
     {
         $authorization = new Authorization(Auth::refresh());
@@ -30,6 +41,9 @@ class AuthorizationController extends Controller
         return $this->response->item($authorization, new AuthorizationTransformer());
     }
 
+    /**
+     * @return \Dingo\Api\Http\Response
+     */
     public function destroy()
     {
         Auth::logout();

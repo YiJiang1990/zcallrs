@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
-use App\Http\Requests\Api\Authorization\StoreRequest;
+Use App\Http\Requests\Api\UserRequest;
 use App\Http\Transformers\PermissionTransformer;
 use App\Models\User;
 use Auth;
@@ -60,11 +60,11 @@ class UserController extends Controller
     }
 
     /**
-     * @param StoreRequest $request
+     * @param UserRequest $request
      * @param User $user
      * @return mixed
      */
-    public function create(StoreRequest $request , User $user)
+    public function create(UserRequest $request , User $user)
     {
         $user->fill($request->all());
         $user->password = bcrypt($user->password);
@@ -90,11 +90,11 @@ class UserController extends Controller
 
     /**
      * @param $id
-     * @param StoreRequest $request
+     * @param UserRequest $request
      * @param User $user
      * @return mixed
      */
-    public function updatePassword($id, StoreRequest $request, User $user)
+    public function updatePassword($id, UserRequest $request, User $user)
     {
         $this->_where[] = ['id', $id];
         if ($user->where($this->_where)->update(['password'=> bcrypt($request->get('password'))])){
@@ -105,10 +105,10 @@ class UserController extends Controller
 
     /**
      * @param $id
-     * @param StoreRequest $request
+     * @param UserRequest $request
      * @return mixed
      */
-    public function update($id, StoreRequest $request)
+    public function update($id, UserRequest $request)
     {
         $data = array_only($request->all(), ['name', 'email', 'phone']);
         $this->_where[] = ['id', $id];
@@ -119,10 +119,10 @@ class UserController extends Controller
     }
 
     /**
-     * @param StoreRequest $request
+     * @param UserRequest $request
      * @return mixed
      */
-    public function delUser(StoreRequest $request){
+    public function delUser(UserRequest $request){
         $this->_where[] =  [ 'deleted_at','<>','not null'];
         $data = User::withTrashed()->where($this->_where)->orderBy('deleted_at', 'desc')->paginate($request->get('limit'));
         return $this->response->paginator($data, new UserTransformer());
