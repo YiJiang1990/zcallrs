@@ -228,4 +228,7 @@ return [
 
     ],
 
+    'api_domain' => env('API_DOMAIN', 'api.homestead.com'),
+    'admin_domain' => env('ADMIN_DOMAIN', 'admin.homestead.com'),
+
 ];
