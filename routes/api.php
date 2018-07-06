@@ -129,12 +129,12 @@ $api->version('v1', [
             $api->patch('role/{id}/user', 'RolesController@addRoleToUser');
         });
 
-        $api->group(['middleware' => ['permission:企业管理-删除列表-添加_admin']],function ($api){
+        $api->group(['middleware' => ['permission:角色管理-角色列表-添加_admin']],function ($api){
             // 新增
             $api->post('role', 'RolesController@create');
         });
 
-        $api->group(['middleware' => ['permission:企业管理-删除列表-编辑_admin']],function ($api){
+        $api->group(['middleware' => ['permission:角色管理-角色列表-编辑_admin']],function ($api){
             // 编辑
             $api->put('role/{id}', 'RolesController@update');
             // 获取角色的权限
