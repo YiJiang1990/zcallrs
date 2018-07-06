@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Api;
 
 
 Use App\Http\Requests\Api\UserRequest;
-use App\Http\Transformers\PermissionTransformer;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Transformers\UserTransformer;
-use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Models\Permission;
 
 /**
  * Class UserController
@@ -31,7 +30,7 @@ class UserController extends Controller
     {
         $auth = $this->user();
         $model = $user->findorfail($auth->id);
-        $auth->permission = $model->getAllPermissions()->where('guard_name', 'api')->pluck('id','id');
+        $auth->permission = $model->getAllPermissions()->where('guard_name', 'admin')->pluck('id','id');
         $auth->nav = config('nav.admin');
         $auth->roles = $model->getRoleNames();
         return $this->response->item($auth, new UserTransformer());

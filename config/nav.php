@@ -80,13 +80,13 @@ return [
                     'meta' => ['title' => '角色管理', 'icon' => 'theme'],
                     'permission_id' => [21]
                 ],
-                [
-                    'path' => 'permission',
-                    'name' => 'permission-index',
-                    'component' => 'roles/permission',
-                    'meta' => ['title' => '功能管理', 'icon' => 'list'],
-                    'permission_id' => [28]
-                ],
+                // [
+                //     'path' => 'permission',
+                //     'name' => 'permission-index',
+                //     'component' => 'roles/permission',
+                //     'meta' => ['title' => '功能管理', 'icon' => 'list'],
+                //     'permission_id' => [28]
+                // ],
                 [
                     'path' => ' =>id(\\d+)/add_permission',
                     'name' => 'add_permission',

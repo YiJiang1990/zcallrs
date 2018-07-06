@@ -20,7 +20,7 @@ class AuthorizationController extends Controller
     public function store(StoreRequest $request)
     {
         $credentials = $request->only('email', 'password');
-
+        $credentials['is_admin'] = 1;
         if (! $token = Auth::attempt($credentials)) {
             abort(401, '用户名或密码错误');
         }

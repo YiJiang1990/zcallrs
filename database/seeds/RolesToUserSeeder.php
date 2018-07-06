@@ -15,6 +15,5 @@ class RolesToUserSeeder extends Seeder
     {
         $role =  Role::whereIn('name',['super-admin'])->get();
         User::find(1)->syncRoles($role);
-
     }
 }
