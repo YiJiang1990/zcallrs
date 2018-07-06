@@ -46,7 +46,7 @@ class PermissionController extends Controller
 
     public function update(PermissionRequest $request)
     {
-        $permission = Permission::findById($request->get('id'));
+        $permission = Permission::findById($request->get('id'),'admin');
         if ($permission->update(['name' => $request->get('name')])) {
             return $this->response->noContent();
         }
@@ -54,7 +54,7 @@ class PermissionController extends Controller
     }
     public function destroy($id)
     {
-        if (Permission::findById($id)->delete()) {
+        if (Permission::findById($id,'admin')->delete()) {
             return $this->response->noContent();
         }
         abort(403, '删除失败');

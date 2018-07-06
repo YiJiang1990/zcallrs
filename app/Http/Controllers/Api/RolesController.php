@@ -53,7 +53,7 @@ class RolesController extends Controller
      */
     public function update(RolesRequest $request)
     {
-        $role = Role::findById($request->get('id'));
+        $role = Role::findById($request->get('id'),'admin');
         if ($role->update(['name' => $request->get('name')])) {
             return $this->response->noContent();
         }
@@ -66,7 +66,7 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        if (Role::findById($id)->delete()) {
+        if (Role::findById($id,'admin')->delete()) {
             return $this->response->noContent();
         }
         abort(403, '删除失败');
@@ -79,7 +79,7 @@ class RolesController extends Controller
      */
     public function addPermissionToRole($id, RolesRequest $request)
     {
-        if (Role::findById($id)->syncPermissions($request->get('role'))){
+        if (Role::findById($id,'admin')->syncPermissions($request->get('role'))){
             return $this->response->noContent();
         }
         abort(403, '授权失败');
@@ -118,7 +118,7 @@ class RolesController extends Controller
     public function show($id)
     {
         $permissions = Roles::find($id)->getAllPermissionsWith;
-        $role = Role::findById($id);
+        $role = Role::findById($id,'admin');
         $role->permission = $permissions;
         return $this->response->item($role,new RoleTransformer());
     }
