@@ -23,7 +23,7 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('user'); //获取当前需要排除的id
+
         switch ($this->method()){
             // UPDATE Password
             case 'GET':
@@ -42,6 +42,7 @@ class UserRequest extends FormRequest
             case 'PUT':
                 return [ 'password' => 'required|alpha_dash|string|min:6'];
             case 'PATCH':
+                $id = $this->route('id'); //获取当前需要排除的id
                 return [
                     'name' => 'required|min:2|max:25',
                     'email' => 'required|email|unique:users,email,'.$id,

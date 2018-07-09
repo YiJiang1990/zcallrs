@@ -23,8 +23,6 @@ class CorporateRequest extends FormRequest
      */
     public function rules()
     {
-
-
         switch ($this->method()){
             // CREATE
             case 'POST':

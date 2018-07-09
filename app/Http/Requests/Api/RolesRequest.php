@@ -34,7 +34,7 @@ class RolesRequest extends FormRequest
                 ];
             case "PATCH" :
                 return [
-                    'role' => 'required|array'
+                    'role' => 'array'
                 ];
             default:
                 return [];
