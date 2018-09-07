@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Http\Requests\Api\FormRequest;
 
 class UserRequest extends FormRequest
 {

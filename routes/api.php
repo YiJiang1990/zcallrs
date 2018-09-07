@@ -11,6 +11,8 @@ $api->version('v1', [
     // 获取 token
     $api->post('authorizations', 'AuthorizationController@store')
         ->name('api.authorizations.store');
+    $api->post('authorizations/corporate', 'AuthorizationController@corporateLogin')
+        ->name('api.authorizations.corporate');
     // 刷新 token
     $api->put('authorizations/current', 'AuthorizationController@update')
         ->name('api.authorizations.update');
@@ -22,6 +24,7 @@ $api->version('v1', [
         // 管理用户
         //  当前用户信息
         $api->get('user', 'UserController@userShow')->name('api.user.show');
+
         // 创建账号管理用户
          $api->group(['middleware' => ['permission:用户管理-添加用户_admin']],function ($api){
             $api->post('user/register', 'UserController@create')->name('user.register');
@@ -171,5 +174,134 @@ $api->version('v1', [
             $api->delete('permission/{id}', 'PermissionController@destroy');
         });
 
+        /***************************************************平台分割线*************************************************/
+
+        // B端
+        // 用户列表
+        $api->get('corporate_user', 'Corporate\UserController@index');
+        // 删除用户列表
+        $api->get('corporate_user/deleteUser', 'Corporate\UserController@delUser');
+        // 创建用户
+        $api->post('corporate_user/register', 'Corporate\UserController@create');
+        // 修改密码
+        $api->put('corporate_user/{id}', 'Corporate\UserController@updatePassword');
+        // 获取用户信息
+        $api->get('corporate_user/{id}/edit', 'Corporate\UserController@edit');
+        // 修改用户信息
+        $api->patch('corporate_user/{id}', 'Corporate\UserController@update');
+        // 禁用企业用户
+        $api->get('corporate_user/{id}', 'Corporate\UserController@updateDeletedTime');
+        // 编辑
+        $api->put('permission/{id}', 'PermissionController@update');
+        // 删除用户
+        $api->delete('corporate_user/{id}', 'CorporateController@destroy');
+        // 恢复用户
+        $api->get('corporate_user/{id}/restore', 'CorporateController@restore');
+
+        // 客户or公海列表
+        $api->get('clients', 'Clients\UserController@index');
+        // 创建客户or公海
+        $api->post('clients', 'Clients\UserController@create');
+        // 逻辑删除客户or公海
+        $api->get('clients/{id}','Clients\UserController@updateStatus');
+        // 编辑客户or公海
+        $api->put('clients/{id}','Clients\UserController@update');
+        // 编辑客户or公海
+        $api->patch('clients/{id}','Clients\UserController@updateType');
+        // 导出客户or公海
+        $api->post('clients/download','Clients\UserController@exportLog');
+        //联系人列表
+        $api->get('address_book', 'Clients\AddressBookController@index');
+        // 创建联系人
+        $api->post('address_book', 'Clients\AddressBookController@create');
+        // 编辑联系人
+        $api->put('address_book/{id}','Clients\AddressBookController@update');
+        // 逻辑联系人
+        $api->get('address_book/{id}','Clients\AddressBookController@updateStatus');
+
+        // 获取自定义样式
+        $api->get('config', 'Config\InputController@index');
+
+        // 获取自定义字段列表
+        $api->get('field','DiyFieldController@index');
+
+        // 添加自定义字段
+        $api->post('config/add_diy_field','DiyFieldController@create');
+        // 修改自定义状态
+        $api->put('config/update_field_status','DiyFieldController@updateStatus');
+
+        // 上传图片
+        $api->post('images','ImagesController@store');
+
+        // 上传文件
+        $api->post('files','FilesController@store');
+
+        // 获取选择列表
+        $api->get('options','SelectTabController@index');
+        // 获取全部选项
+        $api->get('options/all','SelectTabController@userStoreAll');
+
+        // 添加选项
+        $api->post('options','SelectTabController@create');
+
+        // 编辑选项
+        $api->put('options/{id}', 'SelectTabController@update');
+
+        // 删除选项
+        $api->delete('options/{id}','SelectTabController@destroy');
+
+        // 获取选择值列表
+        $api->get('options_value','OptionsController@index');
+
+        // 添加选项值
+        $api->post('options_value','OptionsController@create');
+
+        // 编辑选项值
+        $api->put('options_value/{id}', 'OptionsController@update');
+
+        // 删除选项值
+        $api->delete('options_value/{id}','OptionsController@destroy');
+
+        // 组管理
+        $api->get('group','Permission\GroupController@index');
+        $api->post('group','Permission\GroupController@create');
+        $api->put('group','Permission\GroupController@update');
+        $api->delete('group','Permission\GroupController@delete');
+        $api->patch('group/action','Permission\GroupController@action');
+        $api->patch('group/user','Permission\GroupController@editRole');
+
+        // 产品
+        $api->get('product','Clients\ProductController@index');
+        $api->post('product','Clients\ProductController@create');
+        $api->put('product','Clients\ProductController@update');
+        $api->delete('product','Clients\ProductController@delete');
+
+        // 商机
+        $api->get('chance','Clients\ChanceController@index');
+        $api->post('chance','Clients\ChanceController@create');
+        $api->put('chance','Clients\ChanceController@update');
+        $api->delete('chance','Clients\ChanceController@delete');
+
+        // 提醒
+        $api->get('record','Clients\RecordController@index');
+        $api->post('record','Clients\RecordController@create');
+        $api->put('record','Clients\RecordController@update');
+        $api->delete('record','Clients\RecordController@delete');
+
+        // 跟进
+        $api->get('follow','Clients\FollowController@index');
+        $api->post('follow','Clients\FollowController@create');
+        $api->put('follow','Clients\FollowController@update');
+        $api->delete('follow','Clients\FollowController@delete');
+
+        // 导出
+        $api->get('export','ExportLogController@index');
+        $api->post('export/download','ExportLogController@download');
+        $api->get('export/downloadLog','ExportUserLogController@index');
+
+        //导入
+        $api->get('import','ImportController@index');
+        $api->post('import/field','ImportController@field');
+        $api->post('import/upload','ImportController@create');
     });
 });

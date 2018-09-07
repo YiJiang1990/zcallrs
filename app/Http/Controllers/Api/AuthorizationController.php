@@ -21,14 +21,27 @@ class AuthorizationController extends Controller
     {
         $credentials = $request->only('email', 'password');
         $credentials['is_admin'] = 1;
-        if (! $token = Auth::attempt($credentials)) {
+        return $this->userLogin($credentials);
+    }
+
+    public function corporateLogin(StoreRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
+        $credentials['is_corporate'] = 1;
+        
+        return $this->userLogin($credentials);
+    }
+
+    private function userLogin(array $credentials)
+    {
+        if (!$token = Auth::attempt($credentials)) {
             abort(401, '用户名或密码错误');
         }
 
         $authorization = new Authorization($token);
 
         return $this->response->item($authorization, new AuthorizationTransformer())
-             ->setStatusCode(201);
+            ->setStatusCode(201);
     }
 
     /**

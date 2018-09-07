@@ -14,7 +14,7 @@ class AddCreateUserIdToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('created_user_id')->default(0)->index()->commit('创建用户ID');
+            $table->integer('created_user_id')->unsigned()->default(0)->index()->comment('创建用户ID');
         });
     }
 

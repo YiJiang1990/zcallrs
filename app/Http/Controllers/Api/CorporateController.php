@@ -45,6 +45,9 @@ class CorporateController extends Controller
         $user->password = bcrypt($user->password);
         $user->created_user_id = Auth::id();
         $user->save();
+        $id = $user->where('email', $request->get('email'))->value('id');
+        $user->parent_uid = $id;
+        $user->save();
         return $this->response->created();
     }
 

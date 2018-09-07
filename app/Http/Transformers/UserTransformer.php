@@ -7,6 +7,8 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['group'];
+
     public function transform(User $user)
     {
         $arr = [
@@ -14,6 +16,7 @@ class UserTransformer extends TransformerAbstract
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
+            'parent_uid' => $user->parent_uid
         ];
         if ($user->nav) {
             $arr['nav'] = $user->nav;
@@ -26,5 +29,10 @@ class UserTransformer extends TransformerAbstract
         }
         return $arr;
         // return $user->attributesToArray();
+    }
+
+    public function includeGroup(User $user)
+    {
+        return $this->collection($user->group, new GroupTransformer());
     }
 }

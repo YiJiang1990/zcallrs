@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Permission\Group;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'started_at','is_admin','is_corporate','is_sms',
         'parent_id','created_corporate_user_number',
         'max_add_corporate_user_number','avatar',
-        'created_user_id'
+        'created_user_id','parent_uid'
     ];
 
     /**
@@ -55,4 +56,8 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function group()
+    {
+        return $this->belongsToMany(Group::class,'group_has_user','user_id','group_id');
+    }
 }

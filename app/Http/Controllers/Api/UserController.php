@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-
 Use App\Http\Requests\Api\UserRequest;
+use App\Models\Permission\Actions;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -26,13 +26,22 @@ class UserController extends Controller
     /**
      * @return mixed
      */
-    public function userShow(User $user)
+    public function userShow(User $user,Actions $actions)
     {
         $auth = $this->user();
-        $model = $user->findorfail($auth->id);
-        $auth->permission = $model->getAllPermissions()->where('guard_name', 'admin')->pluck('id','id');
-        $auth->nav = config('nav.admin');
-        $auth->roles = $model->getRoleNames();
+        // 後台數據
+        if ($auth->is_admin == 1) {
+            $model = $user->findorfail($auth->id);
+            $auth->permission = $model->getAllPermissions()->where('guard_name', 'admin')->pluck('id','id');
+            $auth->nav = config('nav.admin');
+            $auth->roles = $model->getRoleNames();
+        }
+
+        // B端
+       if ($auth->is_corporate == 1) {
+           $auth->nav = config('nav.api');
+           $auth->permission = $actions->getUserAction();
+       }
         return $this->response->item($auth, new UserTransformer());
     }
 

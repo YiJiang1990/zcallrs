@@ -26,7 +26,6 @@ class CorporateRequest extends FormRequest
         switch ($this->method()){
             // CREATE
             case 'POST':
-            {
                 $rule = [
                     'email' => 'required|string|email|max:255|unique:users',
                     'phone' => [
@@ -42,30 +41,25 @@ class CorporateRequest extends FormRequest
                 ];
                 // CREATE ROLES
                 return $rule;
-            }
             // UPDATE
             case 'PUT':
                 return [ 'password' => 'required|alpha_dash|string|min:6'];
             case 'PATCH':
-            {
+
                 return [
                     'name' => 'min:2|max:25',
                     'max_add_corporate_user_number' => 'numeric',
                     'started_at' => 'date',
                     'ended_at' => 'date|after:started_at'
                 ];
-            }
+
             case 'GET':
-
+            return [];
             case 'DELETE':
-            default:
-            {
-                return [];
-            };
-        }
-        return [
+               return [];
+            default:return [];
 
-        ];
+        }
     }
 
 }
