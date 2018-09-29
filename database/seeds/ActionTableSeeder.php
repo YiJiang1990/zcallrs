@@ -41,8 +41,8 @@ class ActionTableSeeder extends Seeder
             ['group' => '联系人', 'group_name' => 'address_book','name' => '新增', 'action_name' => 'add', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '联系人', 'group_name' => 'address_book','name' => '编辑', 'action_name' => 'edit', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '联系人', 'group_name' => 'address_book','name' => '删除', 'action_name' => 'delete', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '联系人', 'group_name' => 'address_book','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '联系人', 'group_name' => 'address_book','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '联系人', 'group_name' => 'address_book','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '联系人', 'group_name' => 'address_book','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '联系人', 'group_name' => 'address_book','name' => '添加自定义字段', 'action_name' => 'add_field', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '联系人', 'group_name' => 'address_book','name' => '编辑自定义字段', 'action_name' => 'edit_field', 'created_at' => $date, 'updated_at' => $date],
 
@@ -80,8 +80,8 @@ class ActionTableSeeder extends Seeder
             ['group' => '商机', 'group_name' => 'chance','name' => '新增', 'action_name' => 'add', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '商机', 'group_name' => 'chance','name' => '编辑', 'action_name' => 'edit', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '商机', 'group_name' => 'chance','name' => '删除', 'action_name' => 'delete', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '商机', 'group_name' => 'chance','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '商机', 'group_name' => 'chance','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '商机', 'group_name' => 'chance','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '商机', 'group_name' => 'chance','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '商机', 'group_name' => 'chance','name' => '添加自定义字段', 'action_name' => 'add_field', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '商机', 'group_name' => 'chance','name' => '编辑自定义字段', 'action_name' => 'edit_field', 'created_at' => $date, 'updated_at' => $date],
 
@@ -90,8 +90,8 @@ class ActionTableSeeder extends Seeder
             ['group' => '跟进', 'group_name' => 'follow','name' => '新增', 'action_name' => 'add', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '跟进', 'group_name' => 'follow','name' => '编辑', 'action_name' => 'edit', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '跟进', 'group_name' => 'follow','name' => '删除', 'action_name' => 'delete', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '跟进', 'group_name' => 'follow','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '跟进', 'group_name' => 'follow','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '跟进', 'group_name' => 'follow','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
+           // ['group' => '跟进', 'group_name' => 'follow','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '跟进', 'group_name' => 'follow','name' => '添加自定义字段', 'action_name' => 'add_field', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '跟进', 'group_name' => 'follow','name' => '编辑自定义字段', 'action_name' => 'edit_field', 'created_at' => $date, 'updated_at' => $date],
 
@@ -100,8 +100,8 @@ class ActionTableSeeder extends Seeder
             ['group' => '提醒', 'group_name' => 'record','name' => '新增', 'action_name' => 'add', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '提醒', 'group_name' => 'record','name' => '编辑', 'action_name' => 'edit', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '提醒', 'group_name' => 'record','name' => '删除', 'action_name' => 'delete', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '提醒', 'group_name' => 'record','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
-            ['group' => '提醒', 'group_name' => 'record','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '提醒', 'group_name' => 'record','name' => '导入', 'action_name' => 'import', 'created_at' => $date, 'updated_at' => $date],
+            //['group' => '提醒', 'group_name' => 'record','name' => '导出', 'action_name' => 'export', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '提醒', 'group_name' => 'record','name' => '添加自定义字段', 'action_name' => 'add_field', 'created_at' => $date, 'updated_at' => $date],
             ['group' => '提醒', 'group_name' => 'record','name' => '编辑自定义字段', 'action_name' => 'edit_field', 'created_at' => $date, 'updated_at' => $date],
 

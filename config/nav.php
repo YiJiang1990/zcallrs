@@ -228,6 +228,20 @@ return [
                     'permission' => ['name' => 'option', 'action' => 'select']
                 ],
                 [
+                    'path' => 'tree-option',
+                    'name' => 'tree-option',
+                    'component' => 'option/tree',
+                    'meta' => ['title' => '树选项管理', 'icon' => 'tree'],
+                    'permission' => ['name' => 'option', 'action' => 'select']
+                ],
+                [
+                    'hidden' => true,
+                    'path' => 'tree-value/:id(\\d+)',
+                    'name' => 'tree-value',
+                    'component' => 'option/treeValue',
+                    'meta' => ['title' => '选项树值管理', 'icon' => 'option'],
+                ],
+                [
                     'hidden' => true,
                     'path' => 'option/:id(\\d+)',
                     'name' => 'option-value',

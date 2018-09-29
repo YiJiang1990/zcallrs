@@ -43,6 +43,7 @@ class ImportController extends Controller
                 $this->dispatch(new ImportSlug($uid,$pid,$import->id,$type,$item));
             }
         }
+
         return $this->response->accepted();
     }
 

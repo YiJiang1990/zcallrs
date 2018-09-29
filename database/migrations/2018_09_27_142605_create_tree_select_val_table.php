@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSelectsValueTable extends Migration
+class CreateTreeSelectValTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,24 @@ class CreateSelectsValueTable extends Migration
      */
     public function up()
     {
-        Schema::create('selects_value', function (Blueprint $table) {
+        Schema::create('tree_select_val', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->comment('名称');
-            $table->integer('selects_tab_id')->index()->unsigned()->comment('选择ID');
+            $table->string('name');
+            $table->integer('tree_select_tab_id')->index()->unsigned()->comment('选择ID');
             $table->integer('user_id')->unsigned()->index()->comment('创建人');
+            $table->unsignedInteger('pid')->nullable();
             $table->integer('parent_uid')->unsigned()->index()->comment('所属组');
-            $table->foreign('selects_tab_id')
-                ->references('id')
-                ->on('selects_tab')
-                ->onDelete('cascade');
             $table->timestamps();
+
+            $table->foreign('pid')
+                ->references('id')
+                ->on('tree_select_val')
+                ->onDelete('cascade');
+
+            $table->foreign('tree_select_tab_id')
+                ->references('id')
+                ->on('tree_select_tab')
+                ->onDelete('cascade');
         });
     }
 
@@ -34,6 +41,6 @@ class CreateSelectsValueTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('selects_value');
+        Schema::dropIfExists('tree_select_val');
     }
 }

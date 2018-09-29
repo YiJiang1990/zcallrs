@@ -55,7 +55,7 @@ class GroupController extends Controller
     public function update(GroupRequest $request, Group $group)
     {
         $update = array_column($request->all(), ['name', 'pid']);
-        $group->where('id', $request->get('id'))->update($update);
+        $group->where('parent_uid',$this->user()->parent_uid)->where('id', $request->get('id'))->update($update);
     }
 
     public function delete(GroupRequest $request, Group $group)
@@ -65,7 +65,7 @@ class GroupController extends Controller
         if ($group->where('pid', $id)->count()) {
             abort(403,'请先删除子级');
         }
-        if ($group->where('id', $id)->delete()) {
+        if ($group->where('parent_uid',$this->user()->parent_uid)->where('id', $id)->delete()) {
             return $this->response->noContent();
         }
         abort(403,'删除失败');

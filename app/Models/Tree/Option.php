@@ -1,33 +1,31 @@
 <?php
 
-namespace App\Models\Permission;
+namespace App\Models\Tree;
 
-use App\Models\Model;
 use Auth;
+use App\Models\Model;
 
-class Group extends Model
+class Option extends Model
 {
-    protected $table = 'group';
+    protected $table = 'tree_select_val';
 
-    protected $fillable = ['name','pid','parent_uid'];
+    protected $fillable = ['name','tree_select_tab_id','user_id','pid','parent_uid'];
 
-    public function getGroup($isTree = true, $isAttr = true,$isWith = true)
+    public function getList($isTree = true, $isAttr = true,$isWith = true)
     {
-       $query = $this->query();
-       if ($isWith) {
-           $query->with(['permission']);
-       }
-       $data = $query->where('parent_uid', Auth::user()->parent_uid)
-           ->select(['id', 'name', 'pid'])->get();
-       $return = ['attr' => [], 'tree' => []];
-       if ($isAttr) {
-          $return['attr'] = $this->getAttr($data->toArray());
-       }
-       if ($isTree) {
-           $return['tree'] =$this->getTree($data, 'name');
-       }
-       return $return;
+        $query = $this->query();
+        $data = $query->where('parent_uid', Auth::user()->parent_uid)
+            ->select(['id', 'name', 'pid'])->get();
+        $return = ['attr' => [], 'tree' => []];
+        if ($isAttr) {
+            $return['attr'] = $this->getAttr($data->toArray());
+        }
+        if ($isTree) {
+            $return['tree'] =$this->getTree($data, 'name');
+        }
+        return $return;
     }
+
     //一般传进三个参数。默认P_id=0；
     protected function getTree($data, $field_name, $field_id = 'id', $field_pid = 'pid', $pid = 0)
     {
@@ -61,15 +59,5 @@ class Group extends Model
             }
         }
         return $tree;
-    }
-
-    public function permission()
-    {
-        return $this->hasMany(GroupHasAction::class,'group_id');
-    }
-
-    public function action()
-    {
-        return $this->belongsToMany(Actions::class,'action_has_group','action_id','group_id');
     }
 }

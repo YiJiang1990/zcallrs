@@ -30,11 +30,14 @@ class GroupRequest extends FormRequest
                     'pid' => 'integer'
                 ];
             case 'PUT':
-                return [
+                $vali = [
                     'id' => 'required|integer',
-                    'name' => 'required|min:2|max:25',
-                    'pid' => 'integer'
-                ];
+                    'name' => 'required|min:2|max:25'];
+                if ($this->request->get('pid')){
+                    $vali['pid'] = 'integer';
+                }
+
+                return $vali;
             case 'PATCH':
                 return [
                     'id' => 'required|integer',

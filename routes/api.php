@@ -243,24 +243,28 @@ $api->version('v1', [
 
         // 添加选项
         $api->post('options','SelectTabController@create');
-
         // 编辑选项
         $api->put('options/{id}', 'SelectTabController@update');
-
         // 删除选项
         $api->delete('options/{id}','SelectTabController@destroy');
-
         // 获取选择值列表
         $api->get('options_value','OptionsController@index');
-
         // 添加选项值
         $api->post('options_value','OptionsController@create');
-
         // 编辑选项值
         $api->put('options_value/{id}', 'OptionsController@update');
-
         // 删除选项值
         $api->delete('options_value/{id}','OptionsController@destroy');
+
+        // 选项树管理
+        $api->get('tree','Tree\TabController@index');
+        $api->post('tree','Tree\TabController@create');
+        $api->put('tree/{id}', 'Tree\TabController@update');
+        $api->delete('tree/{id}','Tree\TabController@destroy');
+        $api->get('tree_value','Tree\ValueController@index');
+        $api->post('tree_value','Tree\ValueController@create');
+        $api->put('tree_value/{id}', 'Tree\ValueController@update');
+        $api->delete('tree_value','Tree\ValueController@destroy');
 
         // 组管理
         $api->get('group','Permission\GroupController@index');
