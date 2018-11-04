@@ -121,6 +121,28 @@ class ChanceRequest extends FormRequest
                 }
                 return $validator;
             case 'PUT':
+                if (request()->route()->getActionMethod() == 'saveChance'){
+                    return [
+                        'chance_id' => [
+                            'required',
+                            'integer',
+                            'exists:chance,id,parent_uid,' . Auth::user()->parent_uid
+                        ],
+                        'name' => [
+                            'required',
+                            'max:25'
+                        ],
+                        'record_time' => [
+                            'required',
+                            'date',
+                        ],
+                        'select_val_id' =>[
+                            'required',
+                            'integer',
+                            'exists:selects_value,id,parent_uid,' . Auth::user()->parent_uid
+                        ]
+                    ];
+                }
                 return [
                     'address_book_id' => [
                         'required',

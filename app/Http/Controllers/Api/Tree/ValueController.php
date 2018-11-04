@@ -27,9 +27,12 @@ class ValueController extends Controller
 
     public function create(GroupRequest $request)
     {
+        $pid = $request->get('pid');
         $this->model->fill($request->all());
         $this->model->parent_uid = $this->user()->parent_uid;
         $this->model->user_id = $this->user()->id;
+        $this->model->is_directory = !isset($pid);
+
         $this->model->save();
         return $this->response->created();
     }

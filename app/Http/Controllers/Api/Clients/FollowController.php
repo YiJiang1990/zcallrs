@@ -27,11 +27,12 @@ class FollowController extends Controller
 
     public function __construct(FollowRequest $request, Follow $follow, Actions $actions)
     {
-        if (!in_array(request()->route()->getActionMethod(),$this->not_permission_action_name)) {
+        if (!in_array(request()->route()->getActionMethod(), $this->not_permission_action_name)) {
             if ($actions->permission($this->_action[request()->route()->getActionMethod()]) == false) {
                 abort(403, '权限不足!');
             };
         }
+
         $this->request = $request;
         $this->model = $follow;
     }
@@ -57,6 +58,8 @@ class FollowController extends Controller
             ->addMeta('diyField', $diyField)
             ->addMeta('diyValue', $value);
     }
+
+
 
     public function create(CommonFieldHandler $fieldHandler)
     {

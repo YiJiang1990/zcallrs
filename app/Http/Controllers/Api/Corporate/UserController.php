@@ -10,7 +10,8 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Controller;
 use App\Models\Permission\Actions;
-
+use App\Http\Requests\Api\Auth\UserRequest as AuthRequest;
+use Hash;
 class UserController extends Controller
 {
     /**
@@ -33,7 +34,7 @@ class UserController extends Controller
       'destroy' => ['group_name' => 'user', 'action_name' => 'destroy'],
     ];
 
-    private $not_permission_action_name = [];
+    private $not_permission_action_name = ['info','updateInfo','updateAuthPassword'];
     public function __construct(Actions $actions)
     {
         if (!in_array(request()->route()->getActionMethod(),$this->not_permission_action_name)) {
@@ -42,6 +43,41 @@ class UserController extends Controller
             };
         }
     }
+
+    public function info()
+    {
+        $data = User::findOrFail($this->user()->id);
+        return $this->response->item($data, new UserTransformer());
+    }
+
+    /**
+     * @param UserRequest $request
+     * @param User $user
+     * @return mixed
+     */
+    public function updateInfo(UserRequest $request, User $user)
+    {
+        $data = array_only($request->all(), ['name', 'phone', 'email','avatar']);
+        $this->_where[] = ['id', $this->user()->id];
+        $this->_where[] = ['parent_uid', Auth::user()->parent_uid];
+        if ($user->where($this->_where)->update($data)) {
+            return $this->response->noContent();
+        }
+        abort(403, '修改失败!');
+    }
+
+    public function updateAuthPassword(AuthRequest $request, User $user)
+    {
+        $this->_where[] = [ 'id' ,'=', $this->user()->id];
+        if (!Hash::check($request->input('old_password'),$this->user()->password)){
+            abort(403, '原密码错误!');
+        }
+        if ($user->where($this->_where)->update(['password' => bcrypt($request->get('password'))])) {
+            return $this->response->noContent();
+        }
+        abort(403, '修改失败!');
+    }
+    
     public function index(Request $request, User $user,Group $group)
     {
         $this->_where[] = [ 'parent_uid' ,'=', $this->user()->parent_uid];
@@ -177,5 +213,4 @@ class UserController extends Controller
         abort(403, '恢复失败!');
 
     }
-
 }

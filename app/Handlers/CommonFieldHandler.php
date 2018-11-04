@@ -7,8 +7,10 @@ use App\Models\DIY\ValueFile;
 use App\Models\DIY\ValueImage;
 use App\Models\DIY\ValueInput;
 use App\Models\DIY\ValueOption;
+use App\Models\DIY\ValueOptionTree;
 use App\Models\DIY\ValueTime;
 use App\Models\DiyCommonField;
+use App\Models\Tree\Option;
 use Auth;
 
 class CommonFieldHandler
@@ -45,6 +47,13 @@ class CommonFieldHandler
                 $query->whereIn('row_id', $userArr)
                     ->select(['id', 'diy_common_filed_id', 'row_id', 'content']);
             },
+            'optionsTreeWith' => function($query) use ($userArr) {
+                $query->whereIn('row_id', $userArr)
+                    ->with(['treeWith' => function($query) {
+                        $query->select(['id','name','path']);
+                    }])
+                    ->select(['id', 'diy_common_filed_id', 'row_id', 'tree_select_val_id']);
+            },
             'imageWith' => function ($query) use ($userArr) {
                 $query->whereIn('row_id', $userArr)
                     ->with(['imagesWith' => function ($qu) {
@@ -68,12 +77,11 @@ class CommonFieldHandler
             ->whereIn('id', $arrID)
             ->where('status', 1)
            ->get()->toArray();
-
         $arr = [];
 
         foreach ($data as $key => $val) {
             $arr = array_merge($arr, array_merge($val['input_with'], $val['editor_with'], $val['file_with'],
-                $val['image_with'], $val['time_with'], $val['option_with']));
+                $val['image_with'], $val['time_with'], $val['option_with'], $val['options_tree_with']));
         }
 
         return $arr;
@@ -106,6 +114,8 @@ class CommonFieldHandler
             $model = new ValueFile();
         } elseif ($value['type'] == 'tinymce' || $value['type'] == 'markdown') {
             $model = new ValueEditor();
+        } elseif ($value['type'] == 'cascader'){
+            $model = new ValueOptionTree();
         } else {
             throw new \Exception('没有找到类型');
         }
@@ -151,6 +161,8 @@ class CommonFieldHandler
             $model = new ValueOption();
         } elseif ($value['type'] == 'date' || $value['type'] == 'datetime' || $value['type'] == 'time') {
             $model = new ValueTime();
+        } elseif ($value['type'] == 'cascader') {
+            $model = new ValueOptionTree();
         } else {
             throw new \Exception('没有找到类型');
         }
@@ -176,6 +188,8 @@ class CommonFieldHandler
             $model = new ValueOption();
         } elseif ($data[1] == 'date' || $data[1] == 'datetime' || $data[1] == 'time') {
             $model = new ValueTime();
+        }  elseif ($data[1] == 'cascader') {
+            $model = new ValueOptionTree();
         } elseif ($data[1] == 'image') {
             $model = new ValueImage();
         } elseif ($data[1] == 'file') {

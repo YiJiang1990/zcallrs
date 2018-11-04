@@ -86,4 +86,5 @@ class Chance extends Model
     {
         return $this->hasOne(SelectTab::class,'id','selects_tab_id');
     }
+
 }

@@ -40,6 +40,10 @@ return [
             [
                 'value' => 'multiple',
                 'label' => '多选下拉',
+            ],
+            [
+                'value' => 'cascader',
+                'label' => '多级下拉'
             ]
         ],
     ],

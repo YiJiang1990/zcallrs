@@ -26,6 +26,13 @@ class TabController extends Controller
         return $this->response->paginator($data, new TreeSelectTabTransformer());
     }
 
+    public function all()
+    {
+        $data = $this->model->where('parent_uid',$this->user()->parent_uid)->get();
+
+        return $this->response->collection($data, new TreeSelectTabTransformer());
+    }
+
     public function create()
     {
         $me = $this->user();

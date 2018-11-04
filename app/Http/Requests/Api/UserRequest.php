@@ -51,6 +51,7 @@ class UserRequest extends FormRequest
                         'unique:users,phone,'.$id
                         ]
                     ];
+
             default:
             {
                 return [

@@ -20,6 +20,9 @@ class CreateTreeSelectValTable extends Migration
             $table->integer('user_id')->unsigned()->index()->comment('创建人');
             $table->unsignedInteger('pid')->nullable();
             $table->integer('parent_uid')->unsigned()->index()->comment('所属组');
+            $table->boolean('is_directory');
+            $table->unsignedInteger('level');
+            $table->string('path');
             $table->timestamps();
 
             $table->foreign('pid')
