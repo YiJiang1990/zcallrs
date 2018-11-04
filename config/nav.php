@@ -67,7 +67,14 @@ return [
                     'component' => 'corporate/delete',
                     'meta' => ['title' => '查看删除企业', 'icon' => 'lock'],
                     'permission_id' => [5]
-                ]
+                ],
+                [
+                    'path' => ':id(\\d+)/telPhone',
+                    'name' => 'tel-index',
+                    'component' => 'corporate/telPhone',
+                    'meta' => ['title' => '分机管理', 'icon' => 'peoples'],
+                    'hidden' => true,
+                    'permission_id' => [2]]
             ]
         ],
         // 角色
@@ -103,6 +110,27 @@ return [
         ]
     ],
     'api' => [
+        // 个人中心
+        [
+            'path' => '/home',
+            'name' => 'home',
+            'hidden' => true,
+            'meta' => ['title' => '个人中心'],
+            'children' => [
+                [   'path' => 'index',
+                    'name' => 'my',
+                    'hidden' => true,
+                    'component' => 'home/index',
+                    'meta' => ['title' => '个人信息','icon' => 'internet']
+                ],
+                [   'path' => 'password',
+                    'name' => 'updatePassword',
+                    'hidden' => true,
+                    'component' => 'home/password',
+                    'meta' => ['title' => '修改密码','icon' => 'internet']
+                ]
+            ]
+        ],
         // 客户管理
         [
             'path' => '/clients',
@@ -197,6 +225,38 @@ return [
                     'component' => 'corporate/delete',
                     'meta' => ['title' => '查看删除用户', 'icon' => 'lock'],
                     'permission' => ['name' => 'user', 'action' => 'delete_list']
+                ]
+            ]
+        ],
+        // 话务管理
+        [
+            'path' => '/communication',
+            'name' => 'communication',
+            'meta' => ['title' => '话务管理', 'icon' => 'phone'],
+            'children' => [
+                [
+                    'path' => 'call-log',
+                    'name' => 'call-log',
+                    'component' => 'log/call/index',
+                    'meta' => ['title' => '通话记录', 'icon' => 'phone_log'],
+                ],
+                [
+                    'path' => 'mailbox',
+                    'name' => 'mailbox',
+                    'component' => 'call/mailbox',
+                    'meta' => ['title' => '语音信箱', 'icon' => 'mailbox'],
+                ],
+                [
+                    'path' => 'call-status',
+                    'name' => 'call-status',
+                    'component' => 'call/callStatus',
+                    'meta' => ['title' => '坐席状态', 'icon' => 'user_status'],
+                ],
+                [
+                    'path' => 'queue',
+                    'name' => 'queue',
+                    'component' => 'call/queue',
+                    'meta' => ['title' => '队列状态', 'icon' => 'queue'],
                 ]
             ]
         ],

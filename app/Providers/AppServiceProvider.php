@@ -15,8 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-	 //     767/4  
-   	Schema::defaultStringLength(191);
+        Schema::defaultStringLength(191);
+
         // model findOrFail 返回404
         \API::error(function (ModelNotFoundException $exception) {
             abort(404);

@@ -25,6 +25,9 @@ $api->version('v1', [
         //  当前用户信息
         $api->get('user', 'UserController@userShow')->name('api.user.show');
 
+        $api->get('{id}/telPhone','Admin\TelPhoneController@index');
+        $api->post('/telPhone','Admin\TelPhoneController@create');
+
         // 创建账号管理用户
          $api->group(['middleware' => ['permission:用户管理-添加用户_admin']],function ($api){
             $api->post('user/register', 'UserController@create')->name('user.register');
@@ -177,6 +180,10 @@ $api->version('v1', [
         /***************************************************平台分割线*************************************************/
 
         // B端
+        // 个人信息
+        $api->get('my','Corporate\UserController@info');
+        $api->patch('my','Corporate\UserController@updateInfo');
+        $api->patch('my/updatePassword','Corporate\UserController@updateAuthPassword');
         // 用户列表
         $api->get('corporate_user', 'Corporate\UserController@index');
         // 删除用户列表
@@ -257,6 +264,7 @@ $api->version('v1', [
         $api->delete('options_value/{id}','OptionsController@destroy');
 
         // 选项树管理
+        $api->get('tree/all','Tree\TabController@all');
         $api->get('tree','Tree\TabController@index');
         $api->post('tree','Tree\TabController@create');
         $api->put('tree/{id}', 'Tree\TabController@update');
@@ -285,7 +293,8 @@ $api->version('v1', [
         $api->post('chance','Clients\ChanceController@create');
         $api->put('chance','Clients\ChanceController@update');
         $api->delete('chance','Clients\ChanceController@delete');
-
+        $api->put('chance/saveChance','Clients\ChanceController@saveChance');
+        $api->get('chance/{id}','Clients\ChanceController@show');
         // 提醒
         $api->get('record','Clients\RecordController@index');
         $api->post('record','Clients\RecordController@create');
@@ -307,5 +316,9 @@ $api->version('v1', [
         $api->get('import','ImportController@index');
         $api->post('import/field','ImportController@field');
         $api->post('import/upload','ImportController@create');
+
+        //话务关联
+        $api->get('log/call','Call\LogController@index');
+        $api->delete('log/call/{id}','Call\LogController@destroy');
     });
 });

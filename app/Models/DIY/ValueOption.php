@@ -24,12 +24,11 @@ class ValueOption extends Model
 
     public function updateValue($id,$value,$ids)
     {
-
-        if (is_array($value['value'])) {
-           $content = implode(',',$value['value']);
-        } else {
-            $content = $value['value'];
-        }
+//        if (is_array($value['value'])) {
+//           $content = implode(',',$value['value']);
+//        } else {
+//            $content = $value['value'];
+//        }
 
         if ($ids){
             return $this->where('row_id',$id)

@@ -18,6 +18,7 @@ class CorporateTransformer extends TransformerAbstract
             'is_sms' => $user->is_sms,
             'started_at' => $user->started_at,
             'ended_at' => $user->ended_at,
+            'parent_uid' => $user->parent_uid
         ];
     }
 }

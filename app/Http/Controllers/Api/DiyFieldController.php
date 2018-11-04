@@ -36,6 +36,12 @@ class DiyFieldController extends Controller
         };
 
         $type = $request->get('type');
+        $selectsTabId = $request->input('selects_tab_id', 0);
+        $treeSelectTabId = 0;
+        if ($type[1] == 'cascader') {
+            $treeSelectTabId = $selectsTabId;
+            $selectsTabId = 0;
+        }
         $add = [
             'parent_uid' => $this->user()->parent_uid,
             'title' => $request->get('title'),
@@ -43,9 +49,9 @@ class DiyFieldController extends Controller
             'from' => $request->get('definedType'),
             'parent_type' => $type[0],
             'children_type' => $type[1],
-            'selects_tab_id' => $request->input('selects_tab_id', 0)
+            'selects_tab_id' => $selectsTabId,
+            'tree_select_tab_id' => $treeSelectTabId
         ];
-
         if ($diyCommonField->create($add)) {
             return $this->response->created();
         }

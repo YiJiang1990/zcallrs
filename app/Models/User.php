@@ -60,4 +60,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Group::class,'group_has_user','user_id','group_id');
     }
+
+    public function avatarWith(){
+        return $this->hasOne(Image::class,'id','avatar');
+    }
 }
